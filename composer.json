@@ -1,0 +1,23 @@
+{
+  "name": "krasnikov-dev/laravel-swagger-attributes",
+  "type": "library",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "KrasnikovDev\\LaravelSwaggerAttributes\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "KrasnikovDev\\LaravelSwaggerAttributes\\Providers\\LaravelSwaggerAttributesProvider"
+      ]
+    }
+  },
+  "require": {
+    "php": "^8.2",
+    "spatie/laravel-data": "^4.0",
+    "symfony/yaml": "^6.0"
+  }
+}
