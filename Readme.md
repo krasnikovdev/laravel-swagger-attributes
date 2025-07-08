@@ -11,7 +11,7 @@ Generate interactive [OpenAPI](https://www.openapis.org) documentation for your 
 ## Installation (with [Composer](https://getcomposer.org))
 
 ```shell
-composer require krasnikovdev/laravel-swagger-attributes
+composer require krasnikov-dev/laravel-swagger-attributes
 ```
 
 ```shell
