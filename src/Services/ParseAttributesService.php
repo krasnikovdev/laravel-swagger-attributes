@@ -100,6 +100,9 @@ class ParseAttributesService
                         name: $property->getName(),
                         type: $this->getPropertyType(type: $property->getType()?->getName()) ?? PropertyTypesEnum::string,
                     );
+
+                    $swaggerSubProperty->properties = $this->parseRequest($property)->properties;
+
                     $swaggerSubProperty->required = !$property->getType()->allowsNull();
                     $this->setValueFromAttributes(
                         swaggerParameter: $swaggerSubProperty,
