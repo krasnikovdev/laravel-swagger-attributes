@@ -28,6 +28,10 @@ class Schema
             $res['name'] = $this->name;
         }
 
+        if ($this->type === PropertyTypesEnum::array) {
+            $res['name'] = "{$this->name}[]";
+        }
+
         if ($this->description) {
             $res['description'] = $this->description;
         }
