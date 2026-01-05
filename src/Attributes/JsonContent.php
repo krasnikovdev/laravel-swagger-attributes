@@ -21,7 +21,7 @@ class JsonContent
          * @var array<int, Property>|null
          */
         public ?array $properties = null,
-        public ?Items $items = null,
+        public ?SwaggerAttributeModels\Items $items = null,
         public ?string $class = null,
     ) {}
 
