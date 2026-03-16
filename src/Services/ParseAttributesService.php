@@ -21,6 +21,7 @@ use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Attributes\FromRouteParameter;
 use Spatie\LaravelData\Attributes\FromRouteParameterProperty;
 use Spatie\LaravelData\Attributes\MapInputName;
+use Spatie\LaravelData\Attributes\MapOutputName;
 use Spatie\LaravelData\Attributes\Validation\BooleanType;
 use Spatie\LaravelData\Attributes\Validation\DateFormat;
 use Spatie\LaravelData\Attributes\Validation\DigitsBetween;
@@ -179,6 +180,9 @@ class ParseAttributesService
                 case MapInputName::class:
                     $swaggerParameter->name = $attribute->getArguments()['input'] ?? $attribute->getArguments()[0];
                     break;
+                case MapOutputName::class:
+                    $swaggerParameter->name = $attribute->getArguments()['input'] ?? $attribute->getArguments()[0];
+                    break;
                 case Required::class:
                 case SwaggerAttribute\Required::class:
                     $swaggerParameter->required = true;
@@ -224,9 +228,9 @@ class ParseAttributesService
                 case In::class:
                     $values = $attribute->getArguments()['values']
                         ??
-                            \is_array(value: $attribute->getArguments()[0])
-                                ? $attribute->getArguments()[0]
-                            : $attribute->getArguments();
+                        \is_array(value: $attribute->getArguments()[0])
+                        ? $attribute->getArguments()[0]
+                        : $attribute->getArguments();
                     $swaggerParameter->type = \is_string($values[0])
                         ? PropertyTypesEnum::string : PropertyTypesEnum::integer;
                     $swaggerParameter->enum = $values;
@@ -265,7 +269,7 @@ class ParseAttributesService
                             $swaggerItemProperty = new Property(
                                 name: $itemsProperty->getName(),
                                 type: $this->getPropertyType(type: $itemsProperty->getType()?->getName())
-                                    ?? PropertyTypesEnum::string,
+                                ?? PropertyTypesEnum::string,
                                 required: !$itemsProperty->getType()->allowsNull(),
                             );
                             $this->setValueFromAttributes($swaggerItemProperty, $itemsProperty->getAttributes() ?? []);
