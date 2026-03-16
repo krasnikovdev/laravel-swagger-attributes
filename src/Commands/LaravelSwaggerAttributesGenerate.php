@@ -178,7 +178,7 @@ class LaravelSwaggerAttributesGenerate extends Command
                     description: 'Validation exception',
                     code: 406,
                     content: new SwaggerModel\Content\ApplicationJson(
-                        schema: new SwaggerModel\Schema(ref: '#components/schemas/ValidationFiled')
+                        schema: new SwaggerModel\Schema(ref: '#/components/schemas/ValidationFiled')
                     )
                 );
             }
