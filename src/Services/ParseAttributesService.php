@@ -167,6 +167,10 @@ class ParseAttributesService
             return PropertyTypesEnum::array;
         }
 
+        if (class_exists($type) && is_subclass_of($type, BackedEnum::class)) {
+            return PropertyTypesEnum::string;
+        }
+
         return null;
     }
 
@@ -204,7 +208,7 @@ class ParseAttributesService
                     $swaggerParameter->type = PropertyTypesEnum::string;
                     break;
                 case WithTransformer::class:
-                    $swaggerParameter->format = $attribute->getArguments()[1];
+                    $swaggerParameter->format = $attribute->getArguments()[1] ?? '';
                     $swaggerParameter->type = PropertyTypesEnum::string;
                     break;
                 case StringType::class:

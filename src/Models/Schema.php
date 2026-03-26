@@ -18,6 +18,7 @@ class Schema
         public ?PropertyTypesEnum $type = null,
         public ?string $ref = null,
         public ?Items $items = null,
+        public ?array $oneOf = null,
     ) {}
 
     public function toArray(): array
@@ -44,6 +45,12 @@ class Schema
             $res['$ref'] = $this->ref;
         }
 
+        if ($this->oneOf) {
+            foreach ($this->oneOf as $key => $oneOf) {
+                $res['oneOf'][] = $oneOf->toArray();
+            }
+        }
+
         if ($this->properties) {
             foreach ($this->properties as $property) {
                 $res['properties'][$property->name] = $property->toObjectArray();
@@ -54,7 +61,6 @@ class Schema
         }
 
         if ($this->items) {
-
             $res['items'] = $this->items->toArray();
         }
 

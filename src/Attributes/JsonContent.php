@@ -23,6 +23,7 @@ class JsonContent
         public ?array $properties = null,
         public ?SwaggerAttributeModels\Items $items = null,
         public ?string $class = null,
+        public ?array $oneOf = null,
     ) {}
 
     /**
@@ -66,6 +67,29 @@ class JsonContent
 
             if ($schema->type === PropertyTypesEnum::array) {
                 $schema->items = new SwaggerAttributeModels\Items(
+                    type: PropertyTypesEnum::object,
+                    properties: $swaggerProperties,
+                );
+            }
+        }
+
+        if ($this->oneOf) {
+            foreach ($this->oneOf as $oneOf) {
+                if (!is_subclass_of($oneOf, Data::class)) {
+                    throw new Exception(message: 'Ref class must be instance of Data');
+                }
+                $refClass = new ReflectionClass($oneOf);
+                $constructor = $refClass->getConstructor();
+                $parameters = $constructor?->getParameters() ?? [];
+
+                $service = new ParseAttributesService();
+
+                $swaggerProperties = [];
+                foreach ($parameters as $parameter) {
+                    $swaggerProperties[] = $service->parseResponse($parameter);
+                }
+
+                $schema->oneOf[] = new SwaggerAttributeModels\Items(
                     type: PropertyTypesEnum::object,
                     properties: $swaggerProperties,
                 );
