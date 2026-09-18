@@ -143,7 +143,7 @@ class LaravelSwaggerAttributesGenerate extends Command
                 }
             }
 
-            if (!empty($secures)) {
+            if (!empty($secures) && !is_string($route->action['middleware'])) {
                 foreach ($route->action['middleware'] ?? [] as $middleware) {
                     $middleware = str_replace(':', '', $middleware);
                     if (\in_array(needle: $middleware, haystack: $secures, strict: true)) {
